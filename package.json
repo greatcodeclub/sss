@@ -1,0 +1,26 @@
+{
+  "name": "sss",
+  "version": "0.0.1",
+  "description": "Super Style Sheets",
+  "main": "lib/sss.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/codedinc/sss.git"
+  },
+  "keywords": [
+    "css",
+    "parser",
+    "compiler"
+  ],
+  "author": "Marc-Andre Cournoyer",
+  "bugs": {
+    "url": "https://github.com/codedinc/sss/issues"
+  },
+  "dependencies": {
+    "jison": "0.4.x",
+    "mocha": "1.x"
+  }
+}
