@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "jison": "0.4.x",
-    "mocha": "1.x"
+    "mocha": "1.x",
+    "nodemon": "1.x"
   }
 }

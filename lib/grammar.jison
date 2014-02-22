@@ -1,5 +1,8 @@
+// Jison parser grammar
+// Based on http://www.w3.org/TR/CSS21/syndata.html#syntax
+
 %{
-  var rules = require('./rules');
+  var sss = require('./sss');
 %}
 
 %%
@@ -9,12 +12,12 @@ styles:
 ;
 
 rules:
-  rule                              { $$ = new rules.Rules([ $1 ]) }
+  rule                              { $$ = new sss.Rules([ $1 ]) }
 | rules rule                        { $$ = $1; $1.push($2) }
 ;
 
 rule:
-  selector '{' properties '}'       { $$ = new rules.Rule($1, $3) }
+  selector '{' properties '}'       { $$ = new sss.Rule($1, $3) }
 ;
 
 selector:
@@ -23,9 +26,11 @@ selector:
 ;
 
 singleSelector:
-  NAME
-| '.' NAME
-| '#' NAME
+  IDENTIFIER
+| '.' IDENTIFIER                    { $$ = $1 + $2 }
+| '#' IDENTIFIER                    { $$ = $1 + $2 }
+| ':' ':' IDENTIFIER                { $$ = $1 + $2 }
+| ':' IDENTIFIER                    { $$ = $1 + $2 }
 ;
 
 properties:
@@ -36,12 +41,19 @@ properties:
 ;
 
 property:
-  NAME ':' value                    { $$ = new rules.Property($1, $3) }
+  IDENTIFIER ':' values             { $$ = new sss.Property($1, $3) }
+;
+
+values:
+  value                             { $$ = [ $1 ] }
+| values value                      { $$ = $1; $1.push($2) }
 ;
 
 value:
-  NAME
-| HEX_NUMBER
-| STRING                            { $$ = $1.substring(1, $1.length-1) }
-| NUMBER                            { $$ = Number($1) }
+  IDENTIFIER
+| STRING
+| COLOR
+| NUMBER
+| DIMENSION
+| URI
 ;
