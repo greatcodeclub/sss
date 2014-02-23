@@ -28,8 +28,16 @@ describe('Parser', function() {
       assert.equal(parseRule("h1 .class {}").selector, "h1 .class")
     })
 
-    it('parses metaclass selector', function() {
-      assert.equal(parseRule("a:hover {}").selector, "a :hover")
+    it('parses direct selector', function() {
+      assert.equal(parseRule("body#id {}").selector, "body#id")
+    })
+
+    it('parses state selector', function() {
+      assert.equal(parseRule("a:hover {}").selector, "a:hover")
+    })
+    
+    it('parses pseudoclass selector', function() {
+      assert.equal(parseRule("::after {}").selector, "::after")
     })
   })
 

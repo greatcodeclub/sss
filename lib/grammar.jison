@@ -1,4 +1,7 @@
 // Jison parser grammar
+//
+// This file, along with tokens.jisonlex is compiled to parser.js.
+//
 // Based on http://www.w3.org/TR/CSS21/syndata.html#syntax
 
 %{

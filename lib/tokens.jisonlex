@@ -7,8 +7,9 @@
 
 //// Macros
 DIGIT                 [0-9]
-NUMBER                {DIGIT}+(\.{DIGIT}+)?
-NAME                  [a-zA-Z][\w\-]*
+NUMBER                {DIGIT}+(\.{DIGIT}+)? // matches: 10 and 3.14
+NAME                  [a-zA-Z][\w\-]*       // matches: body, background-color and myClassName
+SELECTOR              (\.|\#|\:\:|\:){NAME} // matches: #id, .class, :hover and ::before
 
 %%
 
@@ -28,12 +29,15 @@ NAME                  [a-zA-Z][\w\-]*
 \'[^']*\'             return 'STRING'
 
 // URI
-url\([\w\/\.:"]+\)    return 'URI'
+url\([^\)]+\)         return 'URI'
 
-// Identifiers
-{NAME}                return 'IDENTIFIER'
-[\.\#\:]{NAME}        return 'SELECTOR'
-\${NAME}              return 'VARIABLE'
+// Selectors
+{SELECTOR}            return 'SELECTOR'    // .class, #id
+{NAME}{SELECTOR}      return 'SELECTOR'    // div.class
+\${NAME}              return 'VARIABLE'    // $variable
+
+// Identifier: can be a tag name selector (eg.: body) or a property name
+{NAME}                return 'IDENTIFIER'  // body or background-color
 
 // We end with a catch all rule. Any one single character that has not been matched
 // will be handled here. A few examples: `.`, `+`, `(` and `)`.
