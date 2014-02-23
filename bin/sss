@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+
+var fs = require('fs'),
+    sss = require('../lib/sss'),
+    file = process.argv[2],
+    code = fs.readFileSync(file, "utf8");
+
+console.log(sss.toCSS(code))

@@ -2,7 +2,7 @@
 // Based on http://www.w3.org/TR/CSS21/syndata.html#syntax
 
 %{
-  var sss = require('./sss');
+  var sss = require('./sss')
 %}
 
 %%
@@ -29,7 +29,6 @@ singleSelector:
   IDENTIFIER
 | '.' IDENTIFIER                    { $$ = $1 + $2 }
 | '#' IDENTIFIER                    { $$ = $1 + $2 }
-| ':' ':' IDENTIFIER                { $$ = $1 + $2 }
 | ':' IDENTIFIER                    { $$ = $1 + $2 }
 ;
 
@@ -47,6 +46,7 @@ property:
 values:
   value                             { $$ = [ $1 ] }
 | values value                      { $$ = $1; $1.push($2) }
+| values ',' value                  { $$ = [$1.join(' ') + $2 + ' ' + $3] }
 ;
 
 value:
