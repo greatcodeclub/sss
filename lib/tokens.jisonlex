@@ -6,6 +6,7 @@
 // Macros
 DIGIT                 [0-9]
 NUMBER                {DIGIT}+(\.{DIGIT}+)?
+NAME                  [a-zA-Z][\w\-]*
 
 %%
 
@@ -24,7 +25,9 @@ NUMBER                {DIGIT}+(\.{DIGIT}+)?
 
 url\([\w\/\.:"]+\)    return 'URI'
 
-[a-zA-Z][\w\-]*       return 'IDENTIFIER'
+{NAME}                return 'IDENTIFIER'
+[\.\#\:]{NAME}        return 'SELECTOR'
+\${NAME}              return 'VARIABLE'
 
 // We end with a catch all rule. Any one single character that has not been matched
 // will be handled here. A few examples: `.`, `+`, `(` and `)`.

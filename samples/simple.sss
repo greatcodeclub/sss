@@ -1,4 +1,21 @@
+$font: Arial, Helvetica;
+
 body {
-  font: 10px arial, helvetica;
-  padding: 0;
+  font: 10px $font;
+  font-weight: bold;
+  
+  $pad: 10px;
+
+  margin: $pad;
+
+  p {
+    padding: $pad;
+    margin-bottom: 0;
+
+    a { text-decoration: none }
+  }
+}
+
+h1 {
+  font-size: 30px;
 }

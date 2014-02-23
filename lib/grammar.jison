@@ -18,6 +18,7 @@ rules:
 
 rule:
   selector '{' properties '}'       { $$ = new sss.Rule($1, $3) }
+| VARIABLE ':' values ';'           { $$ = new sss.Assign($1, $3) }
 ;
 
 selector:
@@ -27,9 +28,7 @@ selector:
 
 singleSelector:
   IDENTIFIER
-| '.' IDENTIFIER                    { $$ = $1 + $2 }
-| '#' IDENTIFIER                    { $$ = $1 + $2 }
-| ':' IDENTIFIER                    { $$ = $1 + $2 }
+| SELECTOR
 ;
 
 properties:
@@ -41,19 +40,22 @@ properties:
 
 property:
   IDENTIFIER ':' values             { $$ = new sss.Property($1, $3) }
+| selector '{' properties '}'       { $$ = new sss.Rule($1, $3) }
+| VARIABLE ':' values               { $$ = new sss.Assign($1, $3) } 
 ;
 
 values:
   value                             { $$ = [ $1 ] }
 | values value                      { $$ = $1; $1.push($2) }
-| values ',' value                  { $$ = [$1.join(' ') + $2 + ' ' + $3] }
+| values ',' value                  { $$ = [new sss.List($1)]; $1.push($3) }
 ;
 
 value:
-  IDENTIFIER
-| STRING
-| COLOR
-| NUMBER
-| DIMENSION
-| URI
+  IDENTIFIER                        { $$ = new sss.Literal($1) }
+| STRING                            { $$ = new sss.Literal($1) }
+| COLOR                             { $$ = new sss.Literal($1) }
+| NUMBER                            { $$ = new sss.Literal($1) }
+| DIMENSION                         { $$ = new sss.Literal($1) }
+| URI                               { $$ = new sss.Literal($1) }
+| VARIABLE                          { $$ = new sss.Variable($1) }
 ;
