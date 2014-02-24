@@ -11,6 +11,10 @@ describe('sss.parse', function() {
     assert.deepEqual(sss.parse("h1 {}\np {}").statements.length, 2)
   })
 
+  it('parses several nested rules', function() {
+    assert.equal(parseRule("body { h1 {}\np {} }").directives.length, 2)
+  })
+
   describe('selector', function() {
     it('parses selector', function() {
       assert.equal(parseRule("h1 {}").selector, "h1")
@@ -19,7 +23,7 @@ describe('sss.parse', function() {
     it('parses parent selector', function() {
       assert.equal(parseRule("h1 p {}").selector, "h1 p")
     })
-
+    
     it('parses id selector', function() {
       assert.equal(parseRule("#id {}").selector, "#id")
     })

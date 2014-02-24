@@ -42,7 +42,7 @@ Or to run the tests on file change:
 
     $ make watch
 
-### How to browse the code
+## How to browse the code
 
 Here are the files you should take a look at, in logical order:
 
@@ -53,7 +53,18 @@ Here are the files you should take a look at, in logical order:
 5. `lib/sss.js` is the public API, putting everything together.
 6. `bin/sss` is the command line interface.
 
-### License
+## Possible extensions
+
+Here are a few ideas to extend this project:
+
+- Add support for functions. Eg.: `background-color: saturate(#def, 20%)`.
+- Add import support. Loading .sss (.css) files from inside a .sss file.
+- Make ';' optional.
+- Add full CSS selector support: `h1, h2`, `h1 + p`, `[attribute=...]`, etc.
+
+Happy coding!
+
+## License
 
 Copyright 2014 Coded Inc.  
 marc@codedinc.com

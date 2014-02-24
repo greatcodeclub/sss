@@ -10,6 +10,8 @@
 
 %%
 
+// TODO refactor push to concat.
+
 // Parsing starts here.
 stylesheet:
   statements EOF                    { return new nodes.StyleSheet($1) }
@@ -45,23 +47,26 @@ singleSelector:
 ;
 
 // Declarations inside a rule.
+
 declarations:
-  declaration                       { $$ = [ $1 ] }
-| declarations ';' declaration      { $$ = $1; $1.push($3) }
+  property                          { $$ = [ $1 ]}
+| rules                             { $$ = $1 }
+| declarations ';' property         { $$ = $1; $1.push($3) }
+| declarations ';' rules            { $$ = $1.concat($3) }
+| declarations ';' rules property   { $$ = $1.concat($3, $4) }
 | declarations ';'                  { $$ = $1 }
 |                                   { $$ = [] }
 ;
 
-// Everything that can appear inside a rule.
-declaration:
-  property
-| rule                              // Nested rule
-| variableDeclaration
+rules:
+  rule                              { $$ = [ $1 ] }
+| rules rule                        { $$ = $1; $1.push($2) }
 ;
 
 // A CSS property: eg.: `padding: 10px 20px`
 property:
   IDENTIFIER ':' values             { $$ = new nodes.Property($1, $3) }
+| variableDeclaration
 ;
 
 // A variable declaration: `$a: value`
