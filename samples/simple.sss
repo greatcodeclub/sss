@@ -1,17 +1,17 @@
-$font: Arial, Helvetica;
+@font: Arial, Helvetica;
 
 body#home {
-  font: 10px $font;
+  font: 10px @font;
   font-weight: bold;
 
   background: url(/images/back.jpg) no-repeat;
   
-  $pad: 10px;
+  @pad: 10px;
 
-  margin: $pad;
+  margin: @pad;
 
   .nestedRule {
-    padding: $pad;
+    padding: @pad;
     margin-bottom: 0;
 
     a:hover { text-decoration: none }

@@ -8,26 +8,26 @@ describe('Context', function() {
     this.parent = new Context(this.root, new nodes.Rule("body", []))
     this.context = new Context(this.parent, new nodes.Rule("a", []))
 
-    this.root.set('$root', true)
-    this.parent.set('$parent', true)
-    this.context.set('$var', true)
+    this.root.set('@root', true)
+    this.parent.set('@parent', true)
+    this.context.set('@var', true)
   })
 
   it('returns variable', function() {
-    assert(this.context.get('$var'))
+    assert(this.context.get('@var'))
   })
 
   it('returns variable from parent', function() {
-    assert(this.context.get('$parent'))
+    assert(this.context.get('@parent'))
   })
 
   it('returns variable from several parents', function() {
-    assert(this.context.get('$root'))
+    assert(this.context.get('@root'))
   })
 
   it('overrides variable from parents', function() {
-    this.context.set('$parent', 'indeed')
-    assert.equal(this.context.get('$parent'), 'indeed')
+    this.context.set('@parent', 'indeed')
+    assert.equal(this.context.get('@parent'), 'indeed')
   })
 
   it('returns cumulative selector', function() {

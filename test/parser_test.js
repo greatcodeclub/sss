@@ -89,11 +89,11 @@ describe('sss.parse', function() {
 
   describe('variables', function() {
     it('parses assignation', function() {
-      assert.deepEqual(parseDirective('$a: 1'), new nodes.Assign('$a', [new nodes.Literal('1')]))
+      assert.deepEqual(parseDirective('@a: 1'), new nodes.Assign('@a', [new nodes.Literal('1')]))
     })
 
     it('parses retrieval', function() {
-      assert.deepEqual(parseDirective('height: $a'), new nodes.Property('height', [new nodes.Variable('$a')]))
+      assert.deepEqual(parseDirective('height: @a'), new nodes.Property('height', [new nodes.Variable('@a')]))
     })
   })
 

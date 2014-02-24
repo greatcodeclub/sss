@@ -18,12 +18,12 @@ describe('sss.toCSS', function() {
   })
   
   it('compiles variables', function() {
-    assert.deepEqual(compile("p { $a: 10px; width: $a; }"),
+    assert.deepEqual(compile("p { @a: 10px; width: @a; }"),
                              "p { width: 10px;}")
   })
   
   it('compiles variables from parent scopes', function() {
-    assert.deepEqual(compile("$a: 10px; p { width: $a; }"),
+    assert.deepEqual(compile("@a: 10px; p { width: @a; }"),
                              "p { width: 10px;}")
   })
 
