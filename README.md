@@ -57,10 +57,11 @@ Here are the files you should take a look at, in logical order:
 
 Here are a few ideas to extend this project:
 
-- Add support for functions. Eg.: `background-color: saturate(#def, 20%)`.
-- Add @import support. Loading .sss (.css) files from inside a .sss file.
+- Add option to output compressed CSS.
+- Implement full CSS selector support: `h1, h2`, `h1 + p`, `[attribute=...]`, etc.
 - Make ';' optional.
-- Add full CSS selector support: `h1, h2`, `h1 + p`, `[attribute=...]`, etc.
+- Add @import support. Loading .sss (.css) files from inside a .sss file.
+- Add support for functions. Eg.: `background-color: saturate(#def, 20%)`.
 
 Happy coding!
 

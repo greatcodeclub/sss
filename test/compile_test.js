@@ -12,9 +12,10 @@ describe('sss.toCSS', function() {
   })
   
   it('compiles nested rules', function() {
-    assert.deepEqual(compile("h1 { p { } }"),
+    assert.deepEqual(compile("h1 { p { } a {} }"),
                              "h1 {}" +
-                             "h1 p {}")
+                             "h1 p {}" +
+                             "h1 a {}")
   })
   
   it('compiles variables', function() {
@@ -28,7 +29,7 @@ describe('sss.toCSS', function() {
   })
 
   function compile(input) {
-    // Squeeze the whitespaces to make sure tests don't break if we modify formatting.
+    // Squeeze the whitespaces to make sure tests don't break if we modify indentation or line breaks.
     return sss.toCSS(input).replace(/\n+/g, '').replace(/ +/g, ' ')
   }
 })
