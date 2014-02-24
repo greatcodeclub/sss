@@ -12,20 +12,24 @@
 
 // Parsing starts here.
 stylesheet:
-  rules EOF                         { return $1 }
+  statements EOF                    { return new nodes.StyleSheet($1) }
 ;
 
-// Several CSS rules
-rules:
-  rule                              { $$ = new nodes.Rules([ $1 ]) }
-| rules rule                        { $$ = $1; $1.push($2) }
+// Style sheets are composed of statements
+statements:
+  statement                         { $$ = [ $1 ] }
+| statements statement              { $$ = $1; $1.push($2) }
 ;
 
-// A top-level CSS rule.
+// One single statement. Anything that can appear at the root of a stylesheet.
+statement:
+  rule
+| variableDeclaration ';'
+;
+
+// A CSS rule.
 rule:
-  selector '{' properties '}'       { $$ = new nodes.Rule($1, $3) }
-  // Variable declaration at the root of a stylesheet.
-| VARIABLE ':' values ';'           { $$ = new nodes.Assign($1, $3) }
+  selector '{' declarations '}'     { $$ = new nodes.Rule($1, $3) }
 ;
 
 // A CSS selector: `h1 a.link`.
@@ -40,29 +44,36 @@ singleSelector:
 | SELECTOR
 ;
 
-// List of properties inside a rule definition.
-properties:
-  property                          { $$ = [ $1 ] }
-| properties ';' property           { $$ = $1; $1.push($3) }
-| properties ';'                    { $$ = $1 }
+// Declarations inside a rule.
+declarations:
+  declaration                       { $$ = [ $1 ] }
+| declarations ';' declaration      { $$ = $1; $1.push($3) }
+| declarations ';'                  { $$ = $1 }
 |                                   { $$ = [] }
 ;
 
-// A single property, nested rule or variable declaration.
-// Everything that can appear inside a rule definition.
-property:
-  IDENTIFIER ':' values             { $$ = new nodes.Property($1, $3) }
-  // Nested rule
-| selector '{' properties '}'       { $$ = new nodes.Rule($1, $3) }
-  // Variable declaration inside a rule
-| VARIABLE ':' values               { $$ = new nodes.Assign($1, $3) } 
+// Everything that can appear inside a rule.
+declaration:
+  property
+| rule                              // Nested rule
+| variableDeclaration
 ;
 
-// Values of a property.
+// A CSS property: eg.: `padding: 10px 20px`
+property:
+  IDENTIFIER ':' values             { $$ = new nodes.Property($1, $3) }
+;
+
+// A variable declaration: `$a: value`
+variableDeclaration:
+  VARIABLE ':' values               { $$ = new nodes.Assign($1, $3) }
+;
+
+// Values of a property. Eg.: `10px` or `10px 20px`
 values:
   value                             { $$ = [ $1 ] }
 | values value                      { $$ = $1; $1.push($2) }
-  // Values seperated by `,` are turned into a `List`.
+  // Values seperated by `,` are turned into a `List`. Eg.: `font-family: Arial, sans-serif`
 | values ',' value                  { $$ = [new nodes.List($1)]; $1.push($3) }
 ;
 

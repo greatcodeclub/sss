@@ -1,7 +1,7 @@
 var assert = require("assert"),
     sss = require('../lib/sss')
 
-describe('toCSS', function() {
+describe('sss.toCSS', function() {
   it('compiles rule', function() {
     assert.deepEqual(compile("h1 p {}"), "h1 p {}")
   })
