@@ -2,7 +2,7 @@
 
 A project of [The Great Code Club](http://www.greatcodeclub.com/).
 
-SSS is a CSS pre-processor, transpiler or compiler. It extends CSS with a few nice features such as nested rules and variables. It reads the input in its own SSS syntax and outputs proper CSS.
+SSS is a CSS pre-processor, transpiler or compiler. It extends CSS with a few nice features such as nested rules and variables.
 
 ## Syntax
 
@@ -11,10 +11,10 @@ Here's what it looks like.
     body#home {
       background-color: #fff;
 
-      $pad: 10px;
+      @pad: 10px;
 
       .nestedRule {
-        padding: $pad;
+        padding: @pad;
       }
     }
 
@@ -58,7 +58,7 @@ Here are the files you should take a look at, in logical order:
 Here are a few ideas to extend this project:
 
 - Add support for functions. Eg.: `background-color: saturate(#def, 20%)`.
-- Add import support. Loading .sss (.css) files from inside a .sss file.
+- Add @import support. Loading .sss (.css) files from inside a .sss file.
 - Make ';' optional.
 - Add full CSS selector support: `h1, h2`, `h1 + p`, `[attribute=...]`, etc.
 
@@ -70,4 +70,3 @@ Copyright 2014 Coded Inc.
 marc@codedinc.com
 
 You are free to modify and distribute this however you want. Except for teaching purposes.
-
