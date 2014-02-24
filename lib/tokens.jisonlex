@@ -3,7 +3,7 @@
 // http://zaach.github.io/jison/docs/#lexical-analysis
 // http://dinosaur.compilertools.net/flex/flex_6.html#SEC6
 //
-// Order is important.
+// Order is important. Rules are matches from top to bottom.
 
 //// Macros
 DIGIT                 [0-9]
