@@ -34,7 +34,6 @@ url\([^\)]+\)         return 'URI'
 // Selectors
 {SELECTOR}            return 'SELECTOR'    // .class, #id
 {NAME}{SELECTOR}      return 'SELECTOR'    // div.class
-\@{NAME}              return 'VARIABLE'    // $variable
 
 // Identifier: can be a tag name selector (eg.: body) or a property name
 {NAME}                return 'IDENTIFIER'  // body or background-color

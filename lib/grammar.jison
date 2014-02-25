@@ -28,7 +28,6 @@ statements:
 // One single statement. Anything that can appear at the root of a stylesheet.
 statement:
   rule
-| variableDeclaration ';'
 ;
 
 // A CSS rule.
@@ -49,39 +48,22 @@ singleSelector:
 ;
 
 // Declarations inside a rule.
-
 declarations:
   property                          { $$ = [ $1 ]}
-| rules                             { $$ = $1 }
 | declarations ';' property         { $$ = $1.concat($3) }
-| declarations ';' rules            { $$ = $1.concat($3) }
-| declarations ';' rules property   { $$ = $1.concat($3, $4) }
 | declarations ';'                  { $$ = $1 }
-|                                   { $$ = [] }
-;
-
-rules:
-  rule                              { $$ = [ $1 ] }
-| rules rule                        { $$ = $1.concat($2) }
+| /* blank */                       { $$ = [] }
 ;
 
 // A CSS property: eg.: `padding: 10px 20px`
 property:
   IDENTIFIER ':' values             { $$ = new nodes.Property($1, $3) }
-| variableDeclaration
-;
-
-// A variable declaration: `$a: value`
-variableDeclaration:
-  VARIABLE ':' values               { $$ = new nodes.Assign($1, $3) }
 ;
 
 // Values of a property. Eg.: `10px` or `10px 20px`
 values:
   value                             { $$ = [ $1 ] }
 | values value                      { $$ = $1.concat($2) }
-  // Values seperated by `,` are turned into a `List`. Eg.: `font-family: Arial, sans-serif`
-| values ',' value                  { $$ = [ new nodes.List($1.concat($3)) ] }
 ;
 
 // Every possible value we can store in a property.
@@ -92,5 +74,4 @@ value:
 | NUMBER                            { $$ = new nodes.Literal($1) }
 | DIMENSION                         { $$ = new nodes.Literal($1) }
 | URI                               { $$ = new nodes.Literal($1) }
-| VARIABLE                          { $$ = new nodes.Variable($1) }
 ;

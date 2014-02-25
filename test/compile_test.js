@@ -11,23 +11,6 @@ describe('sss.toCSS', function() {
                              "h1 { width: 10px; height: 2px;}")
   })
   
-  it('compiles nested rules', function() {
-    assert.deepEqual(compile("h1 { p { } a {} }"),
-                             "h1 {}" +
-                             "h1 p {}" +
-                             "h1 a {}")
-  })
-  
-  it('compiles variables', function() {
-    assert.deepEqual(compile("p { @a: 10px; width: @a; }"),
-                             "p { width: 10px;}")
-  })
-  
-  it('compiles variables from parent scopes', function() {
-    assert.deepEqual(compile("@a: 10px; p { width: @a; }"),
-                             "p { width: 10px;}")
-  })
-
   function compile(input) {
     // Squeeze the whitespaces to make sure tests don't break if we modify indentation or line breaks.
     return sss.toCSS(input).replace(/\n+/g, '').replace(/ +/g, ' ')
