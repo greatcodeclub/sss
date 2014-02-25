@@ -16,23 +16,18 @@
 
 // Parsing starts here.
 stylesheet:
-  statements EOF                    { return new nodes.StyleSheet($1) }
+  rules EOF                         { return new nodes.StyleSheet($1) }
 ;
 
-// Style sheets are composed of statements
-statements:
-  statement                         { $$ = [ $1 ] }
-| statements statement              { $$ = $1.concat($2) }
-;
-
-// One single statement. Anything that can appear at the root of a stylesheet.
-statement:
-  rule
+// Style sheets are composed of rules
+rules:
+  rule                              { $$ = [ $1 ] }
+| rules rule                        { $$ = $1.concat($2) }
 ;
 
 // A CSS rule.
 rule:
-  selector '{' declarations '}'     { $$ = new nodes.Rule($1, $3) }
+  selector '{' properties '}'       { $$ = new nodes.Rule($1, $3) }
 ;
 
 // A CSS selector: `h1 a.link`.
@@ -48,10 +43,10 @@ singleSelector:
 ;
 
 // Declarations inside a rule.
-declarations:
-  property                          { $$ = [ $1 ]}
-| declarations ';' property         { $$ = $1.concat($3) }
-| declarations ';'                  { $$ = $1 }
+properties:
+  property                          { $$ = [ $1 ] }
+| properties ';' property           { $$ = $1.concat($3) }
+| properties ';'                    { $$ = $1 }
 | /* blank */                       { $$ = [] }
 ;
 
@@ -73,5 +68,4 @@ value:
 | COLOR                             { $$ = new nodes.Literal($1) }
 | NUMBER                            { $$ = new nodes.Literal($1) }
 | DIMENSION                         { $$ = new nodes.Literal($1) }
-| URI                               { $$ = new nodes.Literal($1) }
 ;

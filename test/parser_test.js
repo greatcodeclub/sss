@@ -59,12 +59,6 @@ describe('sss.parse', function() {
                                                      new nodes.Literal('5.1%')]))
     })
 
-    it('parses url', function() {
-      assert.deepEqual(parseDirective("background: url(/images/pony.jpg) url(http://a.com/i.gif)"),
-                       new nodes.Property('background', [new nodes.Literal('url(/images/pony.jpg)'),
-                                                         new nodes.Literal('url(http://a.com/i.gif)')]))
-    })
-
     it('parses several properties', function() {
       var rule = parseRule('h1 { height: 10px; width: 20px; }')
       assert.deepEqual(rule.directives,

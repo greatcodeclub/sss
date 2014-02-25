@@ -28,9 +28,6 @@ SELECTOR              (\.|\#|\:\:|\:){NAME} // matches: #id, .class, :hover and 
 \"[^"]*\"             return 'STRING'
 \'[^']*\'             return 'STRING'
 
-// URI
-url\([^\)]+\)         return 'URI'
-
 // Selectors
 {SELECTOR}            return 'SELECTOR'    // .class, #id
 {NAME}{SELECTOR}      return 'SELECTOR'    // div.class
