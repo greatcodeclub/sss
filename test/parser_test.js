@@ -8,7 +8,7 @@ describe('sss.parse', function() {
   })
   
   it('parses several rules', function() {
-    assert.deepEqual(sss.parse("h1 {}\np {}").statements.length, 2)
+    assert.deepEqual(sss.parse("h1 {}\np {}").rules.length, 2)
   })
 
   describe('selector', function() {
@@ -43,17 +43,17 @@ describe('sss.parse', function() {
 
   describe('property', function() {
     it('parses color', function() {
-      assert.deepEqual(parseDirective("background-color: #f0f0f0"),
+      assert.deepEqual(parseProperty("background-color: #f0f0f0"),
                        new nodes.Property('background-color', [new nodes.Literal('#f0f0f0')]))
     })
 
     it('parses string', function() {
-      assert.deepEqual(parseDirective("background: 'what'"),
+      assert.deepEqual(parseProperty("background: 'what'"),
                        new nodes.Property('background', [new nodes.Literal("'what'")]))
     })
 
     it('parses dimension', function() {
-      assert.deepEqual(parseDirective("height: 10px 1.2em 5.1%"),
+      assert.deepEqual(parseProperty("height: 10px 1.2em 5.1%"),
                        new nodes.Property('height', [new nodes.Literal('10px'),
                                                      new nodes.Literal('1.2em'),
                                                      new nodes.Literal('5.1%')]))
@@ -61,7 +61,7 @@ describe('sss.parse', function() {
 
     it('parses several properties', function() {
       var rule = parseRule('h1 { height: 10px; width: 20px; }')
-      assert.deepEqual(rule.directives,
+      assert.deepEqual(rule.properties,
                        [
                          new nodes.Property('height', [new nodes.Literal('10px')]),
                          new nodes.Property('width', [new nodes.Literal('20px')])
@@ -70,10 +70,10 @@ describe('sss.parse', function() {
   })
 
   function parseRule(css) {
-    return sss.parse(css).statements[0]
+    return sss.parse(css).rules[0]
   }
 
-  function parseDirective(css) {
-    return parseRule("h1 { " + css + " }").directives[0]
+  function parseProperty(css) {
+    return parseRule("h1 { " + css + " }").properties[0]
   }
 })
