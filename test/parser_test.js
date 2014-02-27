@@ -4,68 +4,51 @@ var assert = require("assert"),
 
 describe('sss.parse', function() {
   it('parses empty rule', function() {
-    assert.deepEqual(parseRule("h1 {}"), new nodes.Rule('h1', []))
+    assert.deepEqual(sss.parse("h1 {}").rules,
+                     [ new nodes.Rule('h1', []) ])
   })
   
   it('parses several rules', function() {
-    assert.deepEqual(sss.parse("h1 {}\np {}").rules.length, 2)
+    assert.deepEqual(sss.parse("h1 {}\np {}").rules,
+                     [
+                       new nodes.Rule('h1', []),
+                       new nodes.Rule('p', [])
+                     ])
+  })
+
+  it('parses properties', function() {
+    var rule = sss.parse('h1 { height: 10px; font-size: 20px; }').rules[0]
+    assert.deepEqual(rule.properties,
+                     [
+                       new nodes.Property('height', [new nodes.Literal('10px')]),
+                       new nodes.Property('font-size', [new nodes.Literal('20px')])
+                     ])
   })
 
   describe('selector', function() {
-    it('parses selector', function() {
-      assert.equal(parseRule("h1 {}").selector, "h1")
-    })
-
-    it('parses parent selector', function() {
-      assert.equal(parseRule("h1 p {}").selector, "h1 p")
-    })
-    
-    it('parses id selector', function() {
-      assert.equal(parseRule("#id {}").selector, "#id")
-    })
-
-    it('parses class selector', function() {
-      assert.equal(parseRule("h1 .class {}").selector, "h1 .class")
-    })
-
-    it('parses direct selector', function() {
-      assert.equal(parseRule("body#id {}").selector, "body#id")
-    })
-
-    it('parses state selector', function() {
-      assert.equal(parseRule("a:hover {}").selector, "a:hover")
-    })
-    
-    it('parses pseudoclass selector', function() {
-      assert.equal(parseRule("::after {}").selector, "::after")
-    })
+    itParsesSelector('h1')
+    itParsesSelector('h1 p')
+    itParsesSelector('#id')
+    itParsesSelector('.class')
+    itParsesSelector('h1 .class')
+    itParsesSelector('h1.class')
+    itParsesSelector('a:hover')
+    itParsesSelector('::after')
   })
 
-  describe('property', function() {
+  describe('values', function() {
     it('parses color', function() {
-      assert.deepEqual(parseProperty("background-color: #f0f0f0"),
-                       new nodes.Property('background-color', [new nodes.Literal('#f0f0f0')]))
+      assert.deepEqual(parseValues("#f0f0f0"), [ new nodes.Literal("#f0f0f0") ])
     })
 
     it('parses string', function() {
-      assert.deepEqual(parseProperty("background: 'what'"),
-                       new nodes.Property('background', [new nodes.Literal("'what'")]))
+      assert.deepEqual(parseValues("'what'"), [ new nodes.Literal("'what'") ])
     })
 
-    it('parses dimension', function() {
-      assert.deepEqual(parseProperty("height: 10px 1.2em 5.1%"),
-                       new nodes.Property('height', [new nodes.Literal('10px'),
-                                                     new nodes.Literal('1.2em'),
-                                                     new nodes.Literal('5.1%')]))
-    })
-
-    it('parses several properties', function() {
-      var rule = parseRule('h1 { height: 10px; width: 20px; }')
-      assert.deepEqual(rule.properties,
-                       [
-                         new nodes.Property('height', [new nodes.Literal('10px')]),
-                         new nodes.Property('width', [new nodes.Literal('20px')])
-                       ])
+    it('parses dimensions', function() {
+      assert.deepEqual(parseValues("10px 1.2em 5.1%"), [ new nodes.Literal("10px"),
+                                                         new nodes.Literal("1.2em"),
+                                                         new nodes.Literal("5.1%") ])
     })
   })
 
@@ -75,5 +58,16 @@ describe('sss.parse', function() {
 
   function parseProperty(css) {
     return parseRule("h1 { " + css + " }").properties[0]
+  }
+
+  function parseValues(values) {
+    return parseProperty("property: " + values).values
+  }
+
+  function itParsesSelector(selector) {
+    it('parses ' + selector + ' selector', function () {
+      var actual = parseRule(selector + " {}").selector
+      assert.equal(actual, selector)
+    })
   }
 })
