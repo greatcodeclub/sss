@@ -1,6 +1,6 @@
-var assert = require("assert"),
-    sss = require('../lib/sss')
+var assert = require('assert'),
+    parser = require('../lib/parser').parser
 
-describe('sss.toCSS', function() {
+describe('Compilation to CSS', function() {
   
 })

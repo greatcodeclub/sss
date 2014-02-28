@@ -1,7 +1,7 @@
-var assert = require("assert"),
-    sss = require('../lib/sss'),
+var assert = require('assert'),
+    parser = require('../lib/parser').parser,
     nodes = require('../lib/nodes')
 
-describe('sss.parse', function() {
+describe('Parser', function() {
   
 })
