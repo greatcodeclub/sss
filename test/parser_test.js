@@ -41,10 +41,6 @@ describe('sss.parse', function() {
       assert.deepEqual(parseValues("#f0f0f0"), [ new nodes.Literal("#f0f0f0") ])
     })
 
-    it('parses string', function() {
-      assert.deepEqual(parseValues("'what'"), [ new nodes.Literal("'what'") ])
-    })
-
     it('parses dimensions', function() {
       assert.deepEqual(parseValues("10px 1.2em 5.1%"), [ new nodes.Literal("10px"),
                                                          new nodes.Literal("1.2em"),

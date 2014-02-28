@@ -24,10 +24,6 @@ SELECTOR              (\.|\#|\:\:|\:){NAME} // matches: #id, .class, :hover and 
 {NUMBER}              return 'NUMBER'
 \#[0-9A-Fa-f]{3,6}    return 'COLOR'
 
-// Strings
-\"[^"]*\"             return 'STRING'
-\'[^']*\'             return 'STRING'
-
 // Selectors
 {SELECTOR}            return 'SELECTOR'    // .class, #id
 {NAME}{SELECTOR}      return 'SELECTOR'    // div.class
