@@ -3,7 +3,7 @@ var assert = require('assert'),
     nodes = require('../lib/nodes')
 
 describe('Parser', function() {
-  xit('parse empty rules', function () {
+  it('parse empty rules', function () {
     assert.deepEqual(parser.parse("h1 {}\n" +
                                   "p {}"),
       new nodes.StyleSheet([
@@ -12,7 +12,7 @@ describe('Parser', function() {
       ]))
   })
 
-  xit('parse properties', function () {
+  it('parse properties', function () {
     assert.deepEqual(parser.parse('h1 { font-size: 10px; padding: 10px 20px; }'),
       new nodes.StyleSheet([
         new nodes.Rule('h1', [
@@ -22,7 +22,7 @@ describe('Parser', function() {
       ]))
   })
 
-  xdescribe('selector', function() {
+  describe('selector', function() {
     itParsesSelector('h1')
     itParsesSelector('#id')
     itParsesSelector('.class')
@@ -31,7 +31,7 @@ describe('Parser', function() {
     itParsesSelector('::after')
   })
 
-  xdescribe('values', function() {
+  describe('values', function() {
     it('parses color', function() {
       assert.deepEqual(parseValues("#f0f0f0"), [ "#f0f0f0" ])
     })

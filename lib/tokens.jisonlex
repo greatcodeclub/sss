@@ -14,5 +14,19 @@ SELECTOR              (\.|\#|\:\:|\:){NAME} // matches: #id, .class, :hover and 
 %%
 
 //// Rules
+\s+                   // ignore spaces, line breaks
+
+// Numbers
+{NUMBER}(px|em|\%)    return 'DIMENSION' // 10px, 1em, 50%
+{NUMBER}              return 'NUMBER' // 0
+\#[0-9A-Fa-f]{3,6}    return 'COLOR' // #fff, #f0f0f0
+
+// Selectors
+{SELECTOR}            return 'SELECTOR' // .class, #id
+{NAME}{SELECTOR}      return 'SELECTOR' // div.class, body#id
+
+{NAME}                return 'IDENTIFIER' // body, font-size
+
+.                     return yytext // {, }, +, :, ;
 
 <<EOF>>               return 'EOF'
