@@ -16,8 +16,8 @@ describe('Parser', function() {
     assert.deepEqual(parser.parse('h1 { font-size: 10px; padding: 10px 20px; }'),
       new nodes.StyleSheet([
         new nodes.Rule('h1', [
-          new nodes.Property('font-size', [ '10px' ]),
-          new nodes.Property('padding', [ '10px', '20px' ])
+          new nodes.Property('font-size', [ new nodes.Literal('10px') ]),
+          new nodes.Property('padding', [ new nodes.Literal('10px'), new nodes.Literal('20px') ])
         ])
       ]))
   })
@@ -44,9 +44,9 @@ describe('Parser', function() {
                                   "}"),
       new nodes.StyleSheet([
         new nodes.Rule('h1', [
-          new nodes.Property('font-size', [ '10px' ]),
+          new nodes.Property('font-size', [ new nodes.Literal('10px') ]),
           new nodes.Rule('p', []),
-          new nodes.Property('font-size', [ '10px' ]),
+          new nodes.Property('font-size', [ new nodes.Literal('10px') ]),
           new nodes.Rule('p', [])
         ])
       ]))
@@ -63,11 +63,30 @@ describe('Parser', function() {
 
   describe('values', function() {
     it('parses color', function() {
-      assert.deepEqual(parseValues("#f0f0f0"), [ "#f0f0f0" ])
+      assert.deepEqual(parseValues("#f0f0f0"), [ new nodes.Literal("#f0f0f0") ])
     })
 
     it('parses dimensions', function() {
-      assert.deepEqual(parseValues("10px 1.2em 5.1%"), [ "10px", "1.2em", "5.1%" ])
+      assert.deepEqual(parseValues("10px 1.2em 5.1%"), [ new nodes.Literal("10px"),
+                                                         new nodes.Literal("1.2em"),
+                                                         new nodes.Literal("5.1%") ])
+    })
+  })
+
+  xdescribe('variables', function() {
+    it('parses variable', function() {
+      assert.deepEqual(parseDeclaration('height: @a'), new nodes.Property('height', [ new nodes.Variable('@a') ]))
+    })
+
+    xit('parses assignation', function() {
+      assert.deepEqual(parseDeclaration('@a: 1'), new nodes.Assign('@a', [ new nodes.Literal('1') ]))
+    })
+
+    xit('parses assignation from root', function() {
+      assert.deepEqual(parser.parse('@a: 1'),
+        new nodes.StyleSheet([
+          new nodes.Assign('@a', [ new nodes.Literal('1') ])
+        ]))
     })
   })
 
@@ -76,12 +95,12 @@ describe('Parser', function() {
     return parser.parse(css).rules[0]
   }
 
-  function parseDirective(css) {
+  function parseDeclaration(css) {
     return parseRule("h1 { " + css + " }").declarations[0]
   }
 
   function parseValues(values) {
-    return parseDirective("property: " + values).values
+    return parseDeclaration("property: " + values).values
   }
 
   function itParsesSelector(selector) {

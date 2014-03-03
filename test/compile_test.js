@@ -22,4 +22,17 @@ describe('Compilation to CSS', function() {
                  "h1 {  }\n" +
                  "h1 p { font-size: 10px; }")
   })
+
+  xit('compiles variables', function() {
+    assert.equal(parser.parse("p { @a: 10px; width: @a; }").toCSS(),
+                              "p { width: 10px; }")
+  })
+  
+  xit('compiles variables from parent scopes', function() {
+    var code = "@a: 10px;\n" +
+               "p { width: @a; }"
+               
+    assert.equal(parser.parse(code).toCSS(),
+                              "p { width: 10px; }")
+  })
 })
