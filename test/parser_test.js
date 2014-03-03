@@ -22,7 +22,7 @@ describe('Parser', function() {
       ]))
   })
 
-  xit('parse nested rules', function () {
+  it('parse nested rules', function () {
     assert.deepEqual(parser.parse("h1 {\n" +
                                   "  p { }\n" +
                                   "  a { }\n" +
@@ -35,7 +35,7 @@ describe('Parser', function() {
       ]))
   })
 
-  xit('parse nested rules with properties', function () {
+  it('parse nested rules with properties', function () {
     assert.deepEqual(parser.parse("h1 {\n" +
                                   "  font-size: 10px;\n" +
                                   "  p { }\n" +
@@ -77,7 +77,7 @@ describe('Parser', function() {
   }
 
   function parseDirective(css) {
-    return parseRule("h1 { " + css + " }").properties[0]
+    return parseRule("h1 { " + css + " }").declarations[0]
   }
 
   function parseValues(values) {

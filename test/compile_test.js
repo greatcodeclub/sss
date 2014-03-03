@@ -13,7 +13,7 @@ describe('Compilation to CSS', function() {
     assert.equal(parser.parse(code).toCSS(), code)
   })
 
-  xit('compiles nested rules', function () {
+  it('compiles nested rules', function () {
     var code = "h1 {\n" +
                "  p { font-size: 10px; }\n" +
                "}"
