@@ -29,9 +29,9 @@ describe('Parser', function() {
                                   "}"),
       new nodes.StyleSheet([
         new nodes.Rule('h1', [
-            new nodes.Rule('p', []),
-            new nodes.Rule('a', []),
-          ])
+          new nodes.Rule('p', []),
+          new nodes.Rule('a', []),
+        ])
       ]))
   })
 
@@ -44,11 +44,11 @@ describe('Parser', function() {
                                   "}"),
       new nodes.StyleSheet([
         new nodes.Rule('h1', [
-            new nodes.Property('font-size', [ '10px' ]),
-            new nodes.Rule('p', []),
-            new nodes.Property('font-size', [ '10px' ]),
-            new nodes.Rule('p', [])
-          ])
+          new nodes.Property('font-size', [ '10px' ]),
+          new nodes.Rule('p', []),
+          new nodes.Property('font-size', [ '10px' ]),
+          new nodes.Rule('p', [])
+        ])
       ]))
   })
 
