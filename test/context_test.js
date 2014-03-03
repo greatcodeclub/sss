@@ -4,17 +4,16 @@
 
 // describe('Context', function() {
 //   beforeEach(function() {
-//     this.root = new Context
-//     this.parent = new Context(new nodes.Rule("body", []), this.root)
+//     this.parent  = new Context(new nodes.Rule("body", []))
 //     this.context = new Context(new nodes.Rule("a", []), this.parent)
-//     //           <- this.root
+
 //     // body {    <- this.parent
 //     //   a {}    <- this.context
 //     // }
 //   })
 
-//   it('returns selector', function() {
-//     assert.equal(this.parent.selector(), "body")
+//   it('returns selectors', function() {
+//     assert.deepEqual(this.context.selectors(), ["body", "a"])
 //   })
 
 //   it('compiles selector from parent contexts', function() {
