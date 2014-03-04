@@ -105,12 +105,12 @@ describe('Parser', function() {
   })
 
   // Helpers
-  function parseRule(css) {
-    return parser.parse(css).rules[0]
+  function parseStatement(css) {
+    return parser.parse(css).statements[0]
   }
 
   function parseDeclaration(css) {
-    return parseRule("h1 { " + css + " }").declarations[0]
+    return parseStatement("h1 { " + css + " }").declarations[0]
   }
 
   function parseValues(values) {
@@ -119,7 +119,7 @@ describe('Parser', function() {
 
   function itParsesSelector(selector) {
     it('parses ' + selector + ' selector', function () {
-      var actual = parseRule(selector + " {}").selector
+      var actual = parseStatement(selector + " {}").selector
       assert.equal(actual, selector)
     })
   }
