@@ -33,7 +33,7 @@ To install Node modules and compile the parser:
 
 ## Usage
 
-To compile an SSS file to CSS:
+To compile a SSS file to CSS:
 
     $ bin/sss samples/complete.sss
 
