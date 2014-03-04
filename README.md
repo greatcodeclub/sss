@@ -26,6 +26,8 @@ You need:
 - A recent version of [node](http://nodejs.org/).
 - `make`. You probably have it already.
 
+To install Node modules and compile the parser:
+
     $ npm install
     $ make
 
