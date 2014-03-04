@@ -11,6 +11,7 @@ Here's what it looks like.
     body#home {
       background-color: #fff;
 
+      // Variables
       @pad: 10px;
 
       .nestedRule {
@@ -23,7 +24,7 @@ Here's what it looks like.
 You need:
 
 - A recent version of [node](http://nodejs.org/).
-- Make. You should have it already.
+- `make`. You probably have it already.
 
     $ npm install
     $ make
@@ -32,7 +33,7 @@ You need:
 
 To compile an SSS file to CSS:
 
-    $ bin/sss samples/simple.sss
+    $ bin/sss samples/complete.sss
 
 To run the tests:
 
@@ -50,18 +51,19 @@ Here are the files you should take a look at, in logical order:
 2. `lib/grammar.jison` is the grammar defining the syntax. It is compiled to `parser.js`.
 3. `lib/nodes.js` contains the nodes created in the grammar.
 4. `lib/context.js` represents the current context (scope) during compilation.
-5. `lib/sss.js` is the public API, putting everything together.
-6. `bin/sss` is the command line interface.
+5. `bin/sss` is the command line interface.
 
 ## Possible extensions
 
 Here are a few ideas to extend this project:
 
-- Add option to output compressed CSS.
-- Implement full CSS selector support: `h1, h2`, `h1 + p`, `[attribute=...]`, etc.
+- Add options to output compressed or indented CSS.
+- Implement full CSS selector support: `h1 p`, `h1, h2`, `h1 > p`, `[attribute=...]`, etc.
+- Add @import support. Loading .sss files from inside a .sss file.
+- Add support for functions. Eg.: `background-color: saturate(#8ef, 20%)`.
 - Make ';' optional.
-- Add @import support. Loading .sss (.css) files from inside a .sss file.
-- Add support for functions. Eg.: `background-color: saturate(#def, 20%)`.
+
+Ping me if you need pointers.
 
 Happy coding!
 
