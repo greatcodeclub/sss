@@ -73,16 +73,16 @@ describe('Parser', function() {
     })
   })
 
-  xdescribe('variables', function() {
+  describe('variables', function() {
     it('parses variable', function() {
       assert.deepEqual(parseDeclaration('height: @a'), new nodes.Property('height', [ new nodes.Variable('@a') ]))
     })
 
-    xit('parses assignation', function() {
+    it('parses assignation', function() {
       assert.deepEqual(parseDeclaration('@a: 1'), new nodes.Assign('@a', [ new nodes.Literal('1') ]))
     })
 
-    xit('parses assignation from root', function() {
+    it('parses assignation from root', function() {
       assert.deepEqual(parser.parse('@a: 1'),
         new nodes.StyleSheet([
           new nodes.Assign('@a', [ new nodes.Literal('1') ])

@@ -25,6 +25,8 @@ SELECTOR              (\.|\#|\:\:|\:){NAME} // matches: #id, .class, :hover and 
 {SELECTOR}            return 'SELECTOR' // .class, #id
 {NAME}{SELECTOR}      return 'SELECTOR' // div.class, body#id
 
+\@{NAME}              return 'VARIABLE' // @variable
+
 {NAME}                return 'IDENTIFIER' // body, font-size
 
 .                     return yytext // {, }, +, :, ;

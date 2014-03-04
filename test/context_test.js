@@ -22,7 +22,7 @@ describe('Context', function() {
     })
   })
 
-  xdescribe('variables', function () {
+  describe('variables', function () {
     beforeEach(function () {
       this.parent.set('@parent', true)
       this.context.set('@var', true)
