@@ -14,6 +14,9 @@ SELECTOR              (\.|\#|\:\:|\:){NAME} // matches: #id, .class, :hover and 
 %%
 
 //// Rules
+
+"//".*                // ignore comments
+
 \s+                   // ignore spaces, line breaks
 
 // Numbers
