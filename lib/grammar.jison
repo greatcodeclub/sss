@@ -19,6 +19,7 @@ stylesheet:
   statements EOF                    { return new nodes.StyleSheet($1) }
 ;
 
+// Style sheets are composed of statements
 statements:
   /* empty */                       { $$ = [] }
 | statementGroup                    { $$ = $1 }
@@ -41,25 +42,31 @@ rules:
 | rules rule                        { $$ = $1.concat($2) }
 ;
 
+// A CSS rule.
 rule:
   selector '{' declarations '}'     { $$ = new nodes.Rule($1, $3) }
 ;
 
+
+// A CSS selector. Eg.: `h1`, `.class`.
 selector:
   IDENTIFIER
 | SELECTOR
 ;
 
+// Declarations inside a rule.
 declarations:
   /* empty */                       { $$ = [] }
 | declarationGroup                  { $$ = $1 }
 | declarations ';' declarationGroup { $$ = $1.concat($3) }
+  // Handle optional trailing ;
 | declarations ';'                  { $$ = $1 }
 ;
 
 declarationGroup:
   declaration                       { $$ = [ $1 ] }
 | rules
+  // ; are optional after rules.
 | rules declaration                 { $$ = $1.concat($2) }
 ;
 
@@ -68,14 +75,17 @@ declaration:
 | variableDeclaration
 ;
 
+// A CSS property. Eg.: `padding: 10px 20px`
 property:
   IDENTIFIER ':' values             { $$ = new nodes.Property($1, $3) }
 ;
 
+// A variable declaration. Eg.: `@var: 1px`
 variableDeclaration:
   VARIABLE ':' values               { $$ = new nodes.Assign($1, $3) }
 ;
 
+// Values of a property. Eg.: `10px` or `10px 20px`
 values:
   value                             { $$ = [ $1 ] }
 | values value                      { $$ = $1.concat($2) }
@@ -83,6 +93,7 @@ values:
 | values ',' value                  { $$ = [ new nodes.List($1.concat($3)) ] }
 ;
 
+// Every possible value we can store in a property.
 value:
   IDENTIFIER                        { $$ = new nodes.Literal($1) }
 | COLOR                             { $$ = new nodes.Literal($1) }

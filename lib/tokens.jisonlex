@@ -25,11 +25,11 @@ SELECTOR              (\.|\#|\:\:|\:){NAME} // matches: #id, .class, :hover and 
 \#[0-9A-Fa-f]{3,6}    return 'COLOR' // #fff, #f0f0f0
 
 // Strings
-\"[^"]*\"             return 'STRING'
-\'[^']*\'             return 'STRING'
+\"[^"]*\"             return 'STRING' // "..."
+\'[^']*\'             return 'STRING' // '...'
 
 // URI
-url\([^\)]+\)         return 'URI'
+url\([^\)]+\)         return 'URI' // url(image.jpg)
 
 // Selectors
 {SELECTOR}            return 'SELECTOR' // .class, #id
@@ -39,6 +39,8 @@ url\([^\)]+\)         return 'URI'
 
 {NAME}                return 'IDENTIFIER' // body, font-size
 
+// We end with a catch all rule. Any one single character that has not been matched
+// will be handled here.
 .                     return yytext // {, }, +, :, ;
 
 <<EOF>>               return 'EOF'
