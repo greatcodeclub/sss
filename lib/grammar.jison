@@ -86,5 +86,6 @@ value:
 | COLOR                             { $$ = new nodes.Literal($1) }
 | NUMBER                            { $$ = new nodes.Literal($1) }
 | DIMENSION                         { $$ = new nodes.Literal($1) }
+| STRING                            { $$ = new nodes.Literal($1) }
 | VARIABLE                          { $$ = new nodes.Variable($1) }
 ;

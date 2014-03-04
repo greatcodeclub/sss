@@ -71,6 +71,10 @@ describe('Parser', function() {
                                                          new nodes.Literal("1.2em"),
                                                          new nodes.Literal("5.1%") ])
     })
+
+    it('parses string', function() {
+      assert.deepEqual(parseValues("'what'"), [ new nodes.Literal("'what'") ])
+    })
   })
 
   describe('variables', function() {
