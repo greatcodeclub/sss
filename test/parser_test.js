@@ -81,6 +81,14 @@ describe('Parser', function() {
                        [ new nodes.Literal('url(/images/pony.jpg)'),
                          new nodes.Literal('url(http://a.com/i.gif)') ])
     })
+
+    it('parses list', function() {
+      assert.deepEqual(parseValues("Arial, 'Helvetica'"),
+                       [new nodes.List([
+                          new nodes.Literal("Arial"),
+                          new nodes.Literal("'Helvetica'")])
+                       ])
+    })
   })
 
   describe('variables', function() {

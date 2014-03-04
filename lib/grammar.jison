@@ -79,6 +79,8 @@ variableDeclaration:
 values:
   value                             { $$ = [ $1 ] }
 | values value                      { $$ = $1.concat($2) }
+  // Values seperated by `,` are turned into a `List`. Eg.: `font-family: Arial, sans-serif`
+| values ',' value                  { $$ = [ new nodes.List($1.concat($3)) ] }
 ;
 
 value:
