@@ -1,7 +1,9 @@
 // Jison lexer grammar
 //
-// http://zaach.github.io/jison/docs/#lexical-analysis
-// http://dinosaur.compilertools.net/flex/flex_6.html#SEC6
+// Jison doc: http://zaach.github.io/jison/docs/#lexical-analysis
+//
+// Jison's lexer is a port of Flex. The format of this file is almost the same.
+// Flex doc: http://dinosaur.compilertools.net/flex/flex_6.html#SEC6
 //
 // Order is important. Rules are matches from top to bottom.
 
