@@ -75,6 +75,12 @@ describe('Parser', function() {
     it('parses string', function() {
       assert.deepEqual(parseValues("'what'"), [ new nodes.Literal("'what'") ])
     })
+
+    it('parses url', function() {
+      assert.deepEqual(parseValues("url(/images/pony.jpg) url(http://a.com/i.gif)"),
+                       [ new nodes.Literal('url(/images/pony.jpg)'),
+                         new nodes.Literal('url(http://a.com/i.gif)') ])
+    })
   })
 
   describe('variables', function() {
