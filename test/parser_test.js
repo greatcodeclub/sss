@@ -58,6 +58,7 @@ describe('Parser', function() {
     itParsesSelector('.class')
     itParsesSelector('h1.class')
     itParsesSelector('a:hover')
+    itParsesSelector('a :hover')
     itParsesSelector('::after')
   })
 

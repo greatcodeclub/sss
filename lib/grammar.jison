@@ -48,10 +48,15 @@ rule:
   selector '{' declarations '}'     { $$ = new nodes.Rule($1, $3) }
 ;
 
-
-// A CSS selector. Eg.: `h1`, `.class`.
+// A CSS selector
 selector:
-  IDENTIFIER
+  selectorElement                   { $$ = $1 }
+| selector selectorElement          { $$ = $1 + ' ' + $2 }
+;
+
+// Part of a CSS selector. Eg.: `h1`, `.class`.
+selectorElement:
+ IDENTIFIER
 | SELECTOR
 ;
 
